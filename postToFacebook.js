@@ -3,9 +3,22 @@ const axios = require('axios');
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const PAGE_ID = process.env.PAGE_ID;
-const message = 'Hello, World! This is a test post from Gaurav (Developer)';
+// const message = 'Hello, World! This is a test post from Gaurav (Developer)';
 
-async function postToFacebookPage() {
+
+const messages = [
+    'Welcome back to the jungle',
+    'give me somw',
+    'sunsine',
+    'give me some',
+    'rain',
+    'give me some',
+    'Jam',
+    'Lets Fun yheee...'
+];
+
+
+async function postToFacebookPage(message) {
     try {
         const response = await axios.post(
             `https://graph.facebook.com/${PAGE_ID}/feed`,
@@ -24,4 +37,12 @@ async function postToFacebookPage() {
     }
 }
 
-postToFacebookPage();
+async function postMessages() {
+    for (const message of messages) {
+        await postToFacebookPage(message);
+        // Optional: Add a delay between posts to avoid rate limits
+        await new Promise(resolve => setTimeout(resolve, 2000)); // 2 seconds delay
+    }
+}
+
+postMessages();
